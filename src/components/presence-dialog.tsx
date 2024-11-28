@@ -35,7 +35,6 @@ function ParticipantListItem({
     JSON.parse(room.metadata)) as RoomMetadata;
 
   const onInvite = async () => {
-    // TODO: optimistic update
     await fetch("/api/invite_to_stage", {
       method: "POST",
       headers: {
@@ -48,7 +47,6 @@ function ParticipantListItem({
     });
   };
 
-  // TODO: optimistic update
   const onRaiseHand = async () => {
     await fetch("/api/raise_hand", {
       method: "POST",
@@ -59,7 +57,6 @@ function ParticipantListItem({
     });
   };
 
-  // TODO: optimistic update
   const onCancel = async () => {
     await fetch("/api/remove_from_stage", {
       method: "POST",
@@ -190,10 +187,10 @@ export function PresenceDialog({
   const { localParticipant } = useLocalParticipant();
   const participants = useParticipants();
   const hosts = participants.filter(
-    (participant) => participant.permissions?.canPublish ?? false
+    (participant) => participant.permissions?.canPublish === true
   );
   const viewers = participants.filter(
-    (participant) => !participant.permissions?.canPublish ?? true
+    (participant) => participant.permissions?.canPublish !== true
   );
 
   return (
